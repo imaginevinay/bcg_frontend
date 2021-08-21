@@ -1,0 +1,28 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Dashboard</h1>
+</div>
+  <div class="chart-container" *ngIf="lineChartData" align="center">
+    <div class="chart-wrapper">
+      <canvas baseChart
+        [datasets]="lineChartData" 
+        [labels]="lineChartLabels" 
+        [options]="lineChartOptions"
+        [colors]="lineChartColors" 
+        [legend]="lineChartLegend" 
+        [chartType]="lineChartType" 
+        [plugins]="lineChartPlugins">
+    </canvas>
+    </div> 
+    <div class="select-button">
+      <mat-form-field appearance="outline">
+        <mat-label>Change Region</mat-label>
+        <mat-select [(value)]="selected" (selectionChange)="optionChange($event)">
+          <mat-option value="East">East</mat-option>
+          <mat-option value="West">West</mat-option>
+          <mat-option value="North">North</mat-option>
+          <mat-option value="South">South</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>   
+  </div>
+

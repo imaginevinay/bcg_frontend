@@ -1,0 +1,74 @@
+.grid-container {
+  margin: 20px 20px 20px 60px;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  width: 0%;
+}
+
+.search-card{
+  width: 50%;
+}
+
+.filter-card {
+  width: 90%;
+  margin-top: 5em;
+}
+
+
+.search-head{
+  margin-bottom: 2em;
+}
+
+.policy-id{
+  margin-right: 2em;
+}
+
+.customer-id {
+  margin-right: 5em;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button {
+  margin-bottom: 1.4em;
+  padding: 1.3em 4em;
+  line-height: 1.125;
+}
+
+.filter-field{
+  width: 100%;
+}
+
+.mat-row:nth-child(odd){
+  background-color: #E8EAF6;
+}
+// .mat-row:not(:nth-child(odd)){
+//   background-color:#ffffff;
+// }
+
+
+table {
+  width: 100%;
+}
+.example-container {
+  position: relative;
+}
+
+.example-container-table {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
+}
+
+mat-icon{
+  cursor: pointer;
+}

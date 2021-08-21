@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Edit Policy</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-grid-list [cols]="breakpoint" rowHeight="100px" (window:resize)="onResize($event)">
+
+    
+    <form [formGroup]="formGroup" class="form">
+        <mat-grid-tile *ngFor="let form_elem of form_template">
+            <div [ngSwitch]="form_elem.type">
+                <div *ngSwitchCase="'text'">
+                    <mat-form-field class="form-element" appearance="outline">
+                        <mat-label>{{form_elem.label}}</mat-label>
+                        <input matInput placeholder="form_elem.label" formControlName="{{form_elem.control}}">
+                        <mat-error *ngIf="(formGroup.get(form_elem.control).errors && formGroup.get(form_elem.control).touched) || isSubmit">
+                          {{ requiredError }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngSwitchCase="'number'">
+                    <mat-form-field class="form-element" appearance="outline">
+                        <mat-label>{{form_elem.label}}</mat-label>
+                        <input matInput [type]="form_elem.type" placeholder="form_elem.label"formControlName="{{form_elem.control}}">
+                        <mat-error *ngIf="(formGroup.get(form_elem.control).errors && formGroup.get(form_elem.control).touched) || isSubmit">
+                          {{premiumLengthError}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngSwitchCase="'select'">
+                    <mat-form-field class="form-element" appearance="outline">
+                        <mat-label>{{form_elem.label}}</mat-label>
+                        <mat-select formControlName="{{form_elem.control}}">
+                            <mat-option *ngFor="let option of form_elem.options" [value]="option.value">{{option.label}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </form>
+</mat-grid-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Close</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="onSubmit()">Update</button>
+</mat-dialog-actions>

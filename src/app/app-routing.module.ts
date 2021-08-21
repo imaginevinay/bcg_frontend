@@ -19,8 +19,12 @@ const routes: Routes = [
     component : PolicyCentreComponent
   },
   {
-    path : '**',
-    component : PageNotFoundComponent
+    path: '404', 
+    component: PageNotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/404'
   },
 
 ];

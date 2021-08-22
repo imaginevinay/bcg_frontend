@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpService } from '../../../shared/services/http.service';
 import { SpinnerOverlayService } from '../../../shared/services/spinner-overlay.service';
-
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { Label } from 'ng2-charts';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -10,11 +11,27 @@ import { SpinnerOverlayService } from '../../../shared/services/spinner-overlay.
 export class DashboardComponent implements OnInit, OnDestroy {
   sub: any;
   selected: any = "East"
-  lineChartData : any;
-  lineChartLabels : any;
-  lineChartOptions = {
+  lineChartData : ChartDataSets;
+  lineChartLabels : Label[];
+  lineChartOptions : ChartOptions  = {
     responsive: true,
     maintainAspectRatio: false,
+    scales: {
+      yAxes: [{
+         scaleLabel: {
+            display: true,
+            labelString: 'Policy Count'
+         }
+      }],
+      xAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: 'Months'
+          }
+        }
+      ]
+   }
   };
   lineChartColors = [
     {
@@ -24,7 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ];
   lineChartLegend = false;
   lineChartPlugins = [];
-  lineChartType = 'bar';
+  lineChartType: ChartType = 'bar';
 
   constructor(private api: HttpService, private spinner : SpinnerOverlayService) {
     
@@ -36,7 +53,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   getChartData(region) {
     this.spinner.show();
     this.sub = this.api.getDashBoardData(region).subscribe((data: any) => {
-      console.log('dash data >', data);
+      
       this.lineChartData = data?.chartData_x || [];
       this.lineChartLabels = data?.chartLabels_y;
       this.spinner.hide();

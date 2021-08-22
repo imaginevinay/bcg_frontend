@@ -43,7 +43,6 @@ export class PolicyCentreComponent implements OnInit, OnDestroy {
   getAllPolicyData() {
     this.spinner.show();
     this.sub = this.api.getAllPolicies().subscribe((data: any) => {
-      // console.log('all data', data)
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

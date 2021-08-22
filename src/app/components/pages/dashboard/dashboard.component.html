@@ -1,8 +1,12 @@
 <div class="grid-container">
   <h1 class="mat-h1">Dashboard</h1>
 </div>
+<mat-card align="center">
+  <h2 class="mat-h2">Polices brought every month per region distribution</h2>
+</mat-card>
+<mat-card>
   <div class="chart-container" *ngIf="lineChartData" align="center">
-    <div class="chart-wrapper">
+    <div class="chart-wrapper" style="display: block;">
       <canvas baseChart
         [datasets]="lineChartData" 
         [labels]="lineChartLabels" 
@@ -25,4 +29,6 @@
       </mat-form-field>
     </div>   
   </div>
+</mat-card>
+  
 

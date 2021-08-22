@@ -13,24 +13,47 @@ export class HttpService {
     this.url = environment.apiRoute;
   }
 
+  /**
+   * 
+   * @param region: region for which policy data is needed
+   * @returns: returns an array of object with data and label  
+   */
+
   getDashBoardData(region) {
-    return this.http.get(this.url+UrlConstants.getChartData+region)
+    return this.http.get(this.url + UrlConstants.getChartData + region)
   }
+
+  /**
+   * 
+   * @returns get all policies data
+   */
 
   getAllPolicies() {
-    return this.http.get(this.url+UrlConstants.getPolicy)
+    return this.http.get(this.url + UrlConstants.getPolicy)
   }
 
+  /**
+   * 
+   * @param data : polciy id or customer id
+   * @returns : one policy object inside an array
+   */
+
   getOnePolicy(data) {
-    let url='';
-    if(!data['policyId'] && data['customerId']) {
+    let url = '';
+    if (!data['policyId'] && data['customerId']) {
       url = `${this.url}${UrlConstants.getCustomer}/${data['customerId']}`
       return this.http.get(url);
     } else {
-      url = `${this.url}${UrlConstants.getPolicy}/${data['policyId']}${data['customerId'] ?'/'+data['customerId']:''}`
+      url = `${this.url}${UrlConstants.getPolicy}/${data['policyId']}${data['customerId'] ? '/' + data['customerId'] : ''}`
       return this.http.get(url);
-    }    
+    }
   }
+
+  /**
+   * 
+   * @param data : modified data from edit policy
+   * @returns : new modified data after saving on db
+   */
 
   updatePolicy(data) {
     let url = `${this.url}${UrlConstants.updatePolicy}/${data._id}`

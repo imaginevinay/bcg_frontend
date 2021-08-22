@@ -11,17 +11,17 @@ import { Label } from 'ng2-charts';
 export class DashboardComponent implements OnInit, OnDestroy {
   sub: any;
   selected: any = "East"
-  lineChartData : ChartDataSets;
-  lineChartLabels : Label[];
-  lineChartOptions : ChartOptions  = {
+  lineChartData: ChartDataSets;
+  lineChartLabels: Label[];
+  lineChartOptions: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
       yAxes: [{
-         scaleLabel: {
-            display: true,
-            labelString: 'Policy Count'
-         }
+        scaleLabel: {
+          display: true,
+          labelString: 'Policy Count'
+        }
       }],
       xAxes: [
         {
@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           }
         }
       ]
-   }
+    }
   };
   lineChartColors = [
     {
@@ -43,17 +43,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
   lineChartPlugins = [];
   lineChartType: ChartType = 'bar';
 
-  constructor(private api: HttpService, private spinner : SpinnerOverlayService) {
-    
-  }
+  constructor(private api: HttpService, private spinner: SpinnerOverlayService) { }
+
+
   ngOnInit() {
+    // on component init get chart data
     this.getChartData(this.selected);
   }
 
+  /**
+   * 
+   * @param region : get chart data : based on region sent from dropdown
+   */
   getChartData(region) {
     this.spinner.show();
     this.sub = this.api.getDashBoardData(region).subscribe((data: any) => {
-      
       this.lineChartData = data?.chartData_x || [];
       this.lineChartLabels = data?.chartLabels_y;
       this.spinner.hide();
@@ -63,11 +67,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     })
   }
 
+
+  /**
+   * 
+   * @param event  : event to get value of dropdown on change
+   */
   optionChange(event) {
     this.getChartData(event.value)
   }
 
-  ngOnDestroy(){
+  // on component exit destroy the subscriber
+  ngOnDestroy() {
+    // unsubscribe to data data api sub
     this.sub.unsubscribe();
   }
 }

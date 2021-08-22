@@ -1,12 +1,12 @@
-import {Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { PolicyData, TableColumns } from 'src/app/shared/constants/templates'
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { SpinnerOverlayService } from 'src/app/shared/services/spinner-overlay.service';
-import {PolicyEditComponent} from './policy-edit/policy-edit.component'
-import {MatDialog} from '@angular/material/dialog';
+import { PolicyEditComponent } from './policy-edit/policy-edit.component'
+import { MatDialog } from '@angular/material/dialog';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -33,12 +33,19 @@ export class PolicyCentreComponent implements OnInit, OnDestroy {
   policyID: String
   sub: any;
   singleDataSub: any;
-  constructor(private api: HttpService, private spinner : SpinnerOverlayService, private dialog: MatDialog, private _snackBar: MatSnackBar) {}
+  constructor(private api: HttpService, private spinner: SpinnerOverlayService, private dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
-
+  /**
+   * on component init load table data
+   */
   ngOnInit() {
     this.getAllPolicyData();
   }
+
+
+  /**
+   * get table data from api and initialize table data source
+   */
 
   getAllPolicyData() {
     this.spinner.show();
@@ -53,19 +60,25 @@ export class PolicyCentreComponent implements OnInit, OnDestroy {
     })
   }
 
+  /**
+   * 
+   * @param event : event on typing inside filterbox to filter table data
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-
-    console.log('datasource>', this.dataSource)
   }
 
+
+  /**
+   * get a single policy based on policy id or customer id
+   */
+
   getPolicy() {
-    if(!this.policyID && !this.customerID) {
+    if (!this.policyID && !this.customerID) {
       this.getAllPolicyData();
     } else {
       this.spinner.show();
@@ -76,30 +89,34 @@ export class PolicyCentreComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        console.log('final ds >', this.dataSource)
         this.spinner.hide();
-      },err => {
+      }, err => {
         console.log('table data error', err);
         this.spinner.hide();
       })
-    }   
+    }
   }
+
+  /**
+   * 
+   * @param rowData : open policy edit dialog with row data passed inside dialog
+   */
 
   openDialog(rowData) {
     const dialogRef = this.dialog.open(PolicyEditComponent, {
       width: '1000px',
-      data: rowData 
+      data: rowData
     });
 
+    // on closing dialog getting data of dialog box
     dialogRef.afterClosed().subscribe(result => {
-      console.log('on dialog close result', result);
       result && this.updatePolicyForm(result.data);
     });
   }
 
+  // sending updated dialog data to backend for update
   updatePolicyForm(data) {
-    this.api.updatePolicy(data).subscribe((result:any) => {
-      console.log(result);
+    this.api.updatePolicy(data).subscribe((result: any) => {
       this.openSnackBar(`Policy No. ${result.Policy_id} updated successfully`, 'success')
       this.getAllPolicyData();
     }, err => {
@@ -109,7 +126,7 @@ export class PolicyCentreComponent implements OnInit, OnDestroy {
     })
   }
 
-
+  // snackbar for success and error
   openSnackBar(msg, type) {
     this._snackBar.open(msg, '', {
       horizontalPosition: this.horizontalPosition,
@@ -118,7 +135,8 @@ export class PolicyCentreComponent implements OnInit, OnDestroy {
       panelClass: type === 'success' ? ['success-snack'] : ['error-snack']
     });
   }
-  
+
+  // on component exit destroy all subscribers
   ngOnDestroy(): void {
     this.sub && this.sub.unsubscribe();
     this.singleDataSub && this.singleDataSub.unsubscribe();

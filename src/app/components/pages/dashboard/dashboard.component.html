@@ -1,10 +1,8 @@
 <div class="grid-container">
   <h1 class="mat-h1">Dashboard</h1>
 </div>
-<mat-card align="center">
-  <h2 class="mat-h2">Polices brought every month per region distribution</h2>
-</mat-card>
-<mat-card>
+<mat-card align="center" class="mat-elevation-z5">
+  <h2 class="mat-h2 chart-heading">Polices brought every month per region distribution</h2>
   <div class="chart-container" *ngIf="lineChartData" align="center">
     <div class="chart-wrapper" style="display: block;">
       <canvas baseChart

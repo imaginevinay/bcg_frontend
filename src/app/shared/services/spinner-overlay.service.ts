@@ -7,11 +7,14 @@ import { SpinnerOverlayComponent } from 'src/app/components/layout/spinner-overl
   providedIn: 'root'
 })
 export class SpinnerOverlayService {
-
+  // this is an overlay from angular cdk used to make css changes from javascript
   private overlayRef: OverlayRef = undefined;
 
   constructor(private overlay: Overlay) { }
 
+  /**
+   * show spinner; position overlay and spinner content on center
+   */
   show(): void {
     Promise.resolve(null).then(() => {
       if (!this.overlayRef) {
@@ -28,6 +31,9 @@ export class SpinnerOverlayService {
     });
   }
 
+  /**
+   * hide spinner; overlay is reset to undefined
+   */
   hide(): void {
     if (this.overlayRef) {
       this.overlayRef.detach();

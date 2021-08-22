@@ -2,7 +2,7 @@
     <h1 class="mat-h1">Policies</h1>
 </div>
 <div align="center">
-    <mat-card class="search-card">
+    <mat-card class="search-card mat-elevation-z5">
         <h2 class="mat-h2 search-head" align="center">Search for policy using Policy ID or Customer ID</h2>
         <div class="search-container">
             <mat-form-field class="example-form-field policy-id" appearance="outline">
@@ -29,13 +29,13 @@
 
 
 <div align="center">
-    <mat-card class="filter-card">
+    <mat-card class="filter-card mat-elevation-z5">
 
         <mat-form-field appearance="outline" class="filter-field">
             <mat-label>Type to filter data</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Policy ID" #input>
         </mat-form-field>
-        <div class="example-container mat-elevation-z8">
+        <div class="example-container">
             <div class="example-container-table">
                 <table mat-table [dataSource]="dataSource" matSort>
                     <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">

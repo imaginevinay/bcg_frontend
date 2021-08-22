@@ -58,8 +58,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   getChartData(region) {
     this.spinner.show();
     this.sub = this.api.getDashBoardData(region).subscribe((data: any) => {
-      this.lineChartData = data?.chartData_x || [];
-      this.lineChartLabels = data?.chartLabels_y;
+      this.lineChartData = data?.chartData_y || [];
+      this.lineChartLabels = data?.chartLabels_x;
       this.spinner.hide();
     }, err => {
       console.log('err in dash data', err)
